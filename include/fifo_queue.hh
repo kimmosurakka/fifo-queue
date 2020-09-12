@@ -1,5 +1,9 @@
-// fifo_queue.hh
-/// A blocking FIFO queue
+/**
+ * Copyright (c) 2020 Kimmo Surakka
+ *
+ * Licensed under the MIT license. See file COPYING in the
+ * project root for details.
+ **/
 #pragma once
 
 #include <queue>
@@ -17,7 +21,9 @@ public:
 	/// Put item to queue. Returns false if operation fails (queue is closed)
 	inline bool operator<<(T&& item);
 
-	/// Get next item from queue. Return false if queue is closed.
+	/// Get next item from queue. If the queue is empty,
+	/// blocks until something is put into queue. If queue is closed
+	/// before anything is put in it, returns false.
 	inline bool operator>>(T& dest);
 private:
 	std::queue<T> queue_;

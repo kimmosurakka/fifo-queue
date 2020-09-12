@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020 Kimmo Surakka
+ *
+ * Licensed under the MIT license. See file COPYING in the
+ * project root for details.
+ **/
+
+// Simple unit tests.
+
 #include "gtest/gtest.h"
 #include "fifo_queue.hh"
 

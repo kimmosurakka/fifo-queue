@@ -1,5 +1,9 @@
-// blocking_base.hh
-// Base class for classes with blockig operations
+/**
+ * Copyright (c) 2020 Kimmo Surakka
+ *
+ * Licensed under the MIT license. See file COPYING in the
+ * project root for details.
+ **/
 #pragma once
 
 #include <functional>

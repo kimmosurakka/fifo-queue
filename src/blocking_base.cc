@@ -1,5 +1,11 @@
-// fifo_queue.cc
-// Implementation for fifo_queue_base
+/**
+ * Copyright (c) 2020 Kimmo Surakka
+ *
+ * Licensed under the MIT license. See file COPYING in the
+ * project root for details.
+ **/
+
+// Implementation for blocking_base
 
 #include "fifo_queue.hh"
 

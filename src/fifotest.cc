@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2020 Kimmo Surakka
+ *
+ * Licensed under the MIT license. See file COPYING in the
+ * project root for details.
+ **/
+
+// The test application. Reads stdin, obfuscates, and
+// writes to stdout.
+
 #include <iostream>
 #include <thread>
 #include <algorithm>
