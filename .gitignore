@@ -4,3 +4,11 @@ Makefile
 cmake_install.cmake
 fifotest
 googletest-src/
+CTestTestfile.cmake
+Testing/
+build/
+googletest-build/
+googletest-download/
+lib/
+libfifolib.a
+test/simple
