@@ -14,8 +14,9 @@ void wait_while(std::function<bool()> cond, int maxtries = 50) {
 TEST(Fifo, PoppingReturnsPushed)
 {
     fifo_queue<std::string> queue;
-    queue.push("Garbage in");
-    std::string out = queue.pop();
+    queue << "Garbage in";
+    std::string out;
+    queue >> out;
     EXPECT_EQ(out, "Garbage in");
 }
 
@@ -26,15 +27,31 @@ TEST(Fifo, PoppingFromEmptyBlocks)
 
     auto consumer = std::thread([&]() {
         state = WAITING;
-        auto out = queue.pop();
+        std::string out;
+        queue >> out;
         state = FINISHED;
     });
     wait_while([&]() {return state == NOT_STARTED;});
     ASSERT_EQ(state, WAITING);
     std::this_thread::sleep_for(std::chrono::seconds(1));
     ASSERT_EQ(state, WAITING);
-    queue.push("Food for thought");
+    queue << "Food for thought";
     wait_while([&]() {return state == WAITING;});
     ASSERT_EQ(state, FINISHED);
     consumer.join();
+}
+
+TEST(Fifo, PoppingFromClosedReturnsWaitingData) {
+    fifo_queue<int> queue;
+    for (int i=0; i<5; ++i) {
+        ASSERT_TRUE(queue << int(i));
+    }
+    queue.close();
+    for (int i=0; i<5; ++i) {
+        int val;
+        ASSERT_TRUE(queue >> val);
+        ASSERT_EQ(val, i);
+    }
+    int val;
+    ASSERT_FALSE(queue >> val);
 }
