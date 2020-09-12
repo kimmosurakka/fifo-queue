@@ -1,12 +1,29 @@
 #include <iostream>
 #include <thread>
+#include <algorithm>
 
 #include "fifo_queue.hh"
 
 typedef fifo_queue<std::string> queue_t;
 
+inline int mod13(int i) {
+	return (i + 13) % 26;
+}
+
+inline char rot13(char c) {
+	if (c >='a' && c <= 'z') {
+		return 'a' + mod13(c - 'a');
+	}
+	if (c >='A' && c <= 'Z') {
+		return 'A' + mod13(c - 'A');
+	}
+	return c;
+}
+
 std::string obfuscate(const std::string& str) {
-	return std::string(str.rbegin(), str.rend());
+	std::string res;
+	std::transform(str.begin(), str.end(), std::back_inserter(res), rot13);
+	return res;
 }
 
 void producer(queue_t& queue) {
