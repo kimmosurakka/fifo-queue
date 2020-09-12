@@ -41,7 +41,7 @@ enable_testing()
 add_subdirectory(test)
 
 add_library(fifolib
-    src/fifo_queue.cc)
+    src/blocking_base.cc)
 target_include_directories(fifolib PUBLIC include)
 target_link_libraries(fifolib Threads::Threads)
 
