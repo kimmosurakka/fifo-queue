@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(fifo-queue)
 
+find_package(Threads REQUIRED)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -41,6 +43,7 @@ add_subdirectory(test)
 add_library(fifolib
     src/fifo_queue.cc)
 target_include_directories(fifolib PUBLIC include)
+target_link_libraries(fifolib Threads::Threads)
 
 add_executable(fifotest
                src/fifotest.cc)
