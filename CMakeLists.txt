@@ -6,6 +6,7 @@ find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in
