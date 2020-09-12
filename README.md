@@ -22,7 +22,7 @@ build$ cmake --build .
 ## Running unit tests
 
 ```
-build$ cmake --build . -t test
+build$ ctest -V
 ```
 
 ## Test application
