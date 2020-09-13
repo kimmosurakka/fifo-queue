@@ -16,7 +16,7 @@
 
 void wait_while(std::function<bool()> cond, int maxtries = 50) {
     while(cond() && maxtries-- > 0) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
 
@@ -41,26 +41,46 @@ TEST(Fifo, PoppingFromEmptyBlocks)
         state = FINISHED;
     });
     wait_while([&]() {return state == NOT_STARTED;});
-    ASSERT_EQ(state, WAITING);
+    EXPECT_EQ(state, WAITING);
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    ASSERT_EQ(state, WAITING);
+    EXPECT_EQ(state, WAITING);
     queue << "Food for thought";
     wait_while([&]() {return state == WAITING;});
-    ASSERT_EQ(state, FINISHED);
+    EXPECT_EQ(state, FINISHED);
     consumer.join();
 }
 
 TEST(Fifo, PoppingFromClosedReturnsWaitingData) {
     fifo_queue<int> queue;
     for (int i=0; i<5; ++i) {
-        ASSERT_TRUE(queue << int(i));
+        EXPECT_TRUE(queue << int(i));
     }
     queue.close();
     for (int i=0; i<5; ++i) {
         int val;
-        ASSERT_TRUE(queue >> val);
-        ASSERT_EQ(val, i);
+        EXPECT_TRUE(queue >> val);
+        EXPECT_EQ(val, i);
     }
-    int val;
-    ASSERT_FALSE(queue >> val);
+}
+
+TEST(Fifo, PushingToClosedFails) {
+    fifo_queue<std::string> queue;
+    queue.close();
+    EXPECT_FALSE(queue << "It's a trap!");
+}
+
+TEST(Fifo, PushingToOpenSucceeds) {
+    fifo_queue<std::string> queue;
+    EXPECT_TRUE(queue << "Lucky guess");
+}
+
+TEST(Fifo, CreatedQueueIsOpen) {
+    fifo_queue<std::string> queue;
+    EXPECT_FALSE(queue.is_closed());
+}
+
+TEST(Fifo, ClosedSetsIsClosed) {
+    fifo_queue<std::string> queue;
+    queue.close();
+    EXPECT_TRUE(queue.is_closed());
 }
