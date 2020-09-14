@@ -13,17 +13,13 @@ fails if the queue is empty (instead of waiting).
 
 ## Building
 
-```
-$ mkdir build; cd build
-build$ cmake ..
-build$ cmake --build .
-```
+    $ mkdir build; cd build
+    build$ cmake ..
+    build$ cmake --build .
 
 ## Running unit tests
 
-```
-build$ ctest -V
-```
+    build$ ctest -V
 
 ## Test application
 
